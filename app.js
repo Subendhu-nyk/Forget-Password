@@ -12,7 +12,8 @@ const router=require('./routes/expense')
 const userRoutes = require('./routes/user')
 const purchaseRoutes = require('./routes/purchase')
 const premiumFeatureRoutes = require('./routes/premiumFeatures')
-const forgetPasswordRoutes = require('./routes/forgotpassword')
+const forgetPasswordRoutes = require('./routes/forgetpassword')
+const Forgotpassword = require('./models/forgotpassword')
 
 app.use(express.json());
 const cors=require('cors')
@@ -20,6 +21,7 @@ app.use(cors())
 app.use(express.static(path.join(__dirname, '..','views')));
 app.use(express.static(path.join(__dirname,'public')))
 app.use(bodyParser.urlencoded({extended:false}))
+
 
 dotenv.config();
 app.use(router)
@@ -34,6 +36,9 @@ Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
+User.hasMany(Forgotpassword);
+Forgotpassword.belongsTo(User);
 
 
 sequelize.sync({ alter: true })
